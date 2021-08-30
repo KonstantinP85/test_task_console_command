@@ -32,15 +32,19 @@ class GetNewsCommand extends Command
         $this->setName('app:get-news');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
         try {
             $this->newsManager->createNews();
         } catch (\Exception $e) {
-            $io->error('Error: ' . $e->getMessage());
-            return -1;
+            return Command::FAILURE;
         }
-        return 0;
+
+        return Command::SUCCESS;
     }
 }
